@@ -1,14 +1,13 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
-        for i in range(1,len(nums)):
-            nums[i] += nums[i-1]
-        exist = {}
-        prev = 0
-        for i in range(len(nums)):
-            if nums[i] % k in exist:
+        exist = {0:-1}
+        total = 0
+        for i,n in enumerate(nums):
+            total += n
+            r = total % k
+            if not r in exist:
+                exist[r] = i
+            elif i - exist[r] > 1:
                 return True
-            
-            exist[prev] = 1
-            prev = nums[i] % k
         
         return False
